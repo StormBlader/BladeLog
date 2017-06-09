@@ -12,7 +12,6 @@ class IndexController extends Controller
 
 	public function index() {
 		$title = 'Hello World!';
-		$config = $this->config_model->find(2);
 		$this->assign('title',$title);
 		$this->display('View/index.php');
 	}
