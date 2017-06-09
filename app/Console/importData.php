@@ -55,11 +55,11 @@ class importData extends BaseConsole
             return false;
         }
 
-        $interface_id = $this->_handleInterface($system_id, $method, $uri);
+        $interface = $this->_handleInterface($system_id, $method, $uri);
 
         $request_log = [
             'system_id'        => $system_id,
-            'interface_id'     => $interface_id,
+            'interface_id'     => isset($interface->id) ? $interface->id : 0,
             'server_ip'        => $this->_getRequestIp($line, 'server_ip'),
             'client_ip'        => $this->_getRequestIp($line, 'client_ip'),
             'request_header'   => $this->_getRequestHeader($line),
@@ -73,6 +73,7 @@ class importData extends BaseConsole
             'upstream_consume' => $this->_getConsume($line, 'upstream_consume'),
         ];
         $ret = RequestLogModel::createLog($request_log);
+        $interface->updateRequestInfo($request_log['request_consume']);
 
         return $ret;
     }
@@ -163,7 +164,7 @@ class importData extends BaseConsole
             $interface->save();
         }
 
-        return $interface->id;
+        return $interface;
     }
 
     private function _getRequestIp($line, $flag = 'server_ip')
