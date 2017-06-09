@@ -3,6 +3,7 @@ namespace App\Console;
 require_once "BaseConsole.php";
 use App\Model\SystemModel;
 use App\Model\InterfaceModel;
+use App\Model\InterfaceStatisticsModel;
 use App\Model\RequestLogModel;
 
 class importData extends BaseConsole
@@ -56,10 +57,13 @@ class importData extends BaseConsole
         }
 
         $interface = $this->_handleInterface($system_id, $method, $uri);
+        if(is_null($interface) || !isset($interface->id)) {
+            return false;
+        }
 
         $request_log = [
             'system_id'        => $system_id,
-            'interface_id'     => isset($interface->id) ? $interface->id : 0,
+            'interface_id'     => $interface->id,
             'server_ip'        => $this->_getRequestIp($line, 'server_ip'),
             'client_ip'        => $this->_getRequestIp($line, 'client_ip'),
             'request_header'   => $this->_getRequestHeader($line),
@@ -74,6 +78,9 @@ class importData extends BaseConsole
         ];
         $ret = RequestLogModel::createLog($request_log);
         $interface->updateRequestInfo($request_log['request_consume']);
+
+        $statistics = $this->_getInterfaceStatistics($interface->id, $request_log['request_time']);
+        $statistics->updateRequestInfo($request_log['request_consume']);
 
         return $ret;
     }
@@ -284,6 +291,20 @@ class importData extends BaseConsole
         }
 
         return 0;
+    }
+
+    private function _getInterfaceStatistics($interface_id, $request_time)
+    {
+        $request_time = date('Y-m-d 00:00:00', strtotime($request_time));
+        $statistics = InterfaceStatisticsModel::where('interface_id', $interface_id)->where('date', $request_time)->first();
+        if(is_null($statistics)) {
+            $statistics = new InterfaceStatisticsModel();
+            $statistics->interface_id = $interface_id;
+            $statistics->date = $request_time;
+            $statistics->save();
+        }
+
+        return $statistics;
     }
 
 }

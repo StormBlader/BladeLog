@@ -13,7 +13,6 @@ class IndexController extends Controller
 	public function index() {
         $worst_interfaces = InterfaceModel::getWorstAvgRequestInterface();
         var_dump($worst_interfaces);exit;
-		$this->assign('title',$title);
 		$this->display('View/index.php');
 	}
 
