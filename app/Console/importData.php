@@ -9,6 +9,10 @@ use App\Model\RequestLogModel;
 class importData extends BaseConsole
 {
     private $file;
+    public static $static_extension = [
+        'css', 'js', 'jpeg', 'jpg', 'png', 'html', 'htm', 'swf', 'ttf', 'gif', 'ico', 'txt'
+    ];
+
 
     public function __construct($argv)
     {
@@ -149,7 +153,8 @@ class importData extends BaseConsole
         $url_suffix = array_pop($arr);
         if(strpos($url_suffix, '.') !== false) {
             $extension_arr = explode('.', $url_suffix);
-            if(isset($extension_arr[1]) && in_array($extension_arr[1], ['css', 'js', 'jpeg', 'jpg', 'png', 'html', 'htm'])) {
+            $extension = array_pop($extension_arr);
+            if(in_array($extension, self::$static_extension)) {
                 return true;
             }
         }
@@ -198,7 +203,7 @@ class importData extends BaseConsole
 
     private function _getRequestTime($line)
     {
-        $pattern = '/.*\[(.*)\].*/';
+        $pattern = '/\[(.*?)\]/';
         if(preg_match($pattern, $line, $arr)) {
             if(isset($arr[1])) {
                 $time = date('Y-m-d H:i:s', strtotime($arr[1]));
@@ -257,7 +262,7 @@ class importData extends BaseConsole
 
     private function _getCountry($line)
     {
-        $pattern = '/.*country\:(.*?)\s+region/';
+        $pattern = '/.*country\:(.*)\s+region/';
         preg_match($pattern, $line, $arr);
 
         return isset($arr[1]) ? $arr[1] : '';
@@ -265,7 +270,7 @@ class importData extends BaseConsole
 
     private function _getRegion($line)
     {
-        $pattern = '/.*region\:(.*?)\s+city/';
+        $pattern = '/.*region\:(.*)\s+city/';
         preg_match($pattern, $line, $arr);
 
         return isset($arr[1]) ? $arr[1] : '';
@@ -273,7 +278,7 @@ class importData extends BaseConsole
 
     private function _getCity($line)
     {
-        $pattern = '/.*city\:(.*?)\s+member_id/';
+        $pattern = '/.*city\:(.*)\s+member_id/';
         preg_match($pattern, $line, $arr);
 
         return isset($arr[1]) ? $arr[1] : '';
