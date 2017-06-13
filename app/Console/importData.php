@@ -47,6 +47,7 @@ class importData extends BaseConsole
 
     private function _handleLog($line)
     {
+error_log(print_r($line, true)."\n", 3, '/tmp/myerror.log');
         $system_name = $this->_getSystemByLine($line);
         if(empty($system_name)) {
             return false;
