@@ -24,6 +24,9 @@ Class View {
      * @return string
      */
     public function render($name = null) {
+        if(isset($_GET['debug']) && $_GET['debug'] == 'json') {
+            print_r(json_encode($this->vars));exit;
+        }
         extract($this->vars, EXTR_SKIP);
         ob_start();
         ob_implicit_flush(0);
