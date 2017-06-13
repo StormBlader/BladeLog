@@ -1,4 +1,3 @@
-
 <!-- jQuery 2.2.3 -->
 <script src="/static/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -9,6 +8,8 @@
 </script>
 <!-- Bootstrap 3.3.6 -->
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<!-- ChartJS 1.0.1 -->
+<script src="/static/plugins/chartjs/Chart.min.js"></script>
 <!-- Morris.js charts -->
 <script src="/static/public/js/raphael-min.js"></script>
 <script src="/static/plugins/morris/morris.min.js"></script>
@@ -36,4 +37,3 @@
 <script src="/static/dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/static/dist/js/demo.js"></script>
-</html>

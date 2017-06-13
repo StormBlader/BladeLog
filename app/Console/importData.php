@@ -47,7 +47,6 @@ class importData extends BaseConsole
 
     private function _handleLog($line)
     {
-error_log(print_r($line, true)."\n", 3, '/tmp/myerror.log');
         $system_name = $this->_getSystemByLine($line);
         if(empty($system_name)) {
             return false;
@@ -85,7 +84,7 @@ error_log(print_r($line, true)."\n", 3, '/tmp/myerror.log');
         $interface->updateRequestInfo($request_log['request_consume']);
 
         $statistics = $this->_getInterfaceStatistics($interface->id, $request_log['request_time']);
-        $statistics->updateRequestInfo($request_log['request_consume']);
+        $statistics->updateRequestInfo($request_log['request_consume'], $request_log['http_code']);
 
         return $ret;
     }
@@ -299,7 +298,7 @@ error_log(print_r($line, true)."\n", 3, '/tmp/myerror.log');
         return 0;
     }
 
-    private function _getInterfaceStatistics($interface_id, $request_time)
+    private function _getInterfaceStatistics($interface_id, $request_time, $http_code)
     {
         $request_time = date('Y-m-d 00:00:00', strtotime($request_time));
         $statistics = InterfaceStatisticsModel::where('interface_id', $interface_id)->where('date', $request_time)->first();

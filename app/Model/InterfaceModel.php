@@ -31,4 +31,9 @@ class InterfaceModel extends BaseModel
         return self::where('avg_request_time', '>', '1000')->orderBy('avg_request_time', 'desc')->take(20)->get();
     }
 
+    public static function getOvertimeCount()
+    {
+        return self::where('avg_request_time', '>', '1000')->count();
+    }
+
 }

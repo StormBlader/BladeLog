@@ -23,15 +23,24 @@
       <li class="treeview">
         <a href="#">
           <i class="fa fa-files-o"></i>
-          <span>各系统接口耗时统计</span>
+          <span>各系统接口耗时</span>
           <span class="pull-right-container">
-            <span class="label label-primary pull-right">4</span>
+            <span class="label label-primary pull-right"><?=count($systems)?></span>
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
+          <?php foreach($systems as $system) { ?>
+          <li><a href=""><i class="fa fa-circle-o"></i><?=$system?></a></li>
+          <?php } ?>
         </ul>
       </li>
+
+      <li>
+        <a href="">
+          <i class="fa fa-th"></i> <span>请求log查看</span>
+        </a>
+      </li>
+
     </ul>
   </section>
   <!-- /.sidebar -->
