@@ -83,7 +83,7 @@ class importData extends BaseConsole
         $ret = RequestLogModel::createLog($request_log);
         $interface->updateRequestInfo($request_log['request_consume']);
 
-        $statistics = $this->_getInterfaceStatistics($interface->id, $request_log['request_time']);
+        $statistics = $this->_getInterfaceStatistics($system_id, $interface->id, $request_log['request_time']);
         $statistics->updateRequestInfo($request_log['request_consume'], $request_log['http_code']);
 
         return $ret;
@@ -298,12 +298,13 @@ class importData extends BaseConsole
         return 0;
     }
 
-    private function _getInterfaceStatistics($interface_id, $request_time, $http_code)
+    private function _getInterfaceStatistics($system_id, $interface_id, $request_time, $http_code)
     {
         $request_time = date('Y-m-d 00:00:00', strtotime($request_time));
-        $statistics = InterfaceStatisticsModel::where('interface_id', $interface_id)->where('date', $request_time)->first();
+        $statistics = InterfaceStatisticsModel::where('system_id', $system_id)->where('interface_id', $interface_id)->where('date', $request_time)->first();
         if(is_null($statistics)) {
             $statistics = new InterfaceStatisticsModel();
+            $statistics->system_id = $system_id;
             $statistics->interface_id = $interface_id;
             $statistics->date = $request_time;
             $statistics->save();

@@ -63,4 +63,17 @@ class InterfaceStatisticsModel extends BaseModel
         return self::where('date' , '>=', $begin_time)->where('date', '<=', $now_time)->where('code_499_count', '>', '0')->count();
     }
 
+    public static function getOneWeekOvertimeInfo()
+    {
+        $begin_time = date('Y-m-d', strtotime('-7 day'));
+        $now_time = date('Y-m-d');
+
+        $ret = self::where('date' , '>=', $begin_time)->where('date', '<=', $now_time)->where('avg_request_time', '>', '1000')->get();
+    }
+
+    public static function getOneWeekErrorInfo()
+    {
+
+    }
+
 }

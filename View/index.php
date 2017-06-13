@@ -9,10 +9,10 @@
   <section class="content-header">
     <h1>
       Dashboard
-      <small>Control panel</small>
+      <small>总体预览</small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
       <li class="active">Dashboard</li>
     </ol>
   </section>
@@ -90,11 +90,30 @@
     <!-- Main row -->
     <div class="row">
       <!-- Left col -->
-      <section class="col-lg-7 connectedSortable">
+      <section class="col-lg-6 connectedSortable">
+        <!-- AREA CHART -->
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">一周内超过1s接口耗时-线形图</h3>
+
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="chart">
+              <canvas id="areaChart" style="height:250px"></canvas>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
         <!-- BAR CHART -->
         <div class="box box-success">
           <div class="box-header with-border">
-            <h3 class="box-title">Bar Chart</h3>
+            <h3 class="box-title">一周内超过1s接口耗时-柱状图</h3>
 
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -110,95 +129,49 @@
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
-
-        <!-- Custom tabs (Charts with tabs)-->
-        <div class="nav-tabs-custom">
-          <!-- Tabs within a box -->
-          <ul class="nav nav-tabs pull-right">
-            <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-            <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-            <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
-          </ul>
-          <div class="tab-content no-padding">
-            <!-- Morris chart - Sales -->
-            <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
-            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
-          </div>
-        </div>
-        <!-- /.nav-tabs-custom -->
-
-      
-        
-
       </section>
       <!-- /.Left col -->
 
       <!-- right col (We are only adding the ID to make the widgets sortable)-->
-      <section class="col-lg-5 connectedSortable">
-        <!-- solid sales graph -->
-        <div class="box box-solid bg-teal-gradient">
-          <div class="box-header">
-            <i class="fa fa-th"></i>
-
-            <h3 class="box-title">Sales Graph</h3>
+      <section class="col-lg-6 connectedSortable">
+        <!-- AREA CHART -->
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">一周内接口错误返回码-线形图</h3>
 
             <div class="box-tools pull-right">
-              <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
               </button>
-              <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i>
-              </button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
           </div>
-          <div class="box-body border-radius-none">
-            <div class="chart" id="line-chart" style="height: 250px;"></div>
+          <div class="box-body">
+            <div class="chart">
+              <canvas id="areaChart2" style="height:250px"></canvas>
+            </div>
           </div>
           <!-- /.box-body -->
-          <div class="box-footer no-border">
-            <div class="row">
-              <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-                <div class="knob-label">Mail-Orders</div>
-              </div>
-              <!-- ./col -->
-              <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-                <div class="knob-label">Online</div>
-              </div>
-              <!-- ./col -->
-              <div class="col-xs-4 text-center">
-                <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-                <div class="knob-label">In-Store</div>
-              </div>
-              <!-- ./col -->
-            </div>
-            <!-- /.row -->
-          </div>
-          <!-- /.box-footer -->
         </div>
         <!-- /.box -->
-         <!-- AREA CHART -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Area Chart</h3>
+        <!-- BAR CHART -->
+        <div class="box box-success">
+          <div class="box-header with-border">
+            <h3 class="box-title">一周内接口错误返回码-柱形图</h3>
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
-            <div class="box-body">
-              <div class="chart">
-                <canvas id="areaChart" style="height:250px"></canvas>
-              </div>
-            </div>
-            <!-- /.box-body -->
           </div>
-          <!-- /.box -->
-        
+          <div class="box-body">
+            <div class="chart">
+              <canvas id="barChart2" style="height:230px"></canvas>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
       </section>
       <!-- right col -->
     </div>
@@ -212,6 +185,82 @@
 <?php include ROOT . 'View/widgets/exportjs.php';?>
 <script>
   $(function () {
+    //--------------
+    //- AREA CHART -
+    //--------------
+
+    // Get context with jQuery - using jQuery's .get() method.
+    var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
+    // This will get the first returned node in the jQuery collection.
+    var areaChart = new Chart(areaChartCanvas);
+
+    var areaChartData = {
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      datasets: [
+        {
+          label: "Electronics",
+          fillColor: "rgba(210, 214, 222, 1)",
+          strokeColor: "rgba(210, 214, 222, 1)",
+          pointColor: "rgba(210, 214, 222, 1)",
+          pointStrokeColor: "#c1c7d1",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(220,220,220,1)",
+          data: [65, 59, 80, 81, 56, 55, 40]
+        },
+        {
+          label: "Digital Goods",
+          fillColor: "rgba(60,141,188,0.9)",
+          strokeColor: "rgba(60,141,188,0.8)",
+          pointColor: "#3b8bba",
+          pointStrokeColor: "rgba(60,141,188,1)",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(60,141,188,1)",
+          data: [28, 48, 40, 19, 86, 27, 90]
+        }
+      ]
+    };
+
+    var areaChartOptions = {
+      //Boolean - If we should show the scale at all
+      showScale: true,
+      //Boolean - Whether grid lines are shown across the chart
+      scaleShowGridLines: false,
+      //String - Colour of the grid lines
+      scaleGridLineColor: "rgba(0,0,0,.05)",
+      //Number - Width of the grid lines
+      scaleGridLineWidth: 1,
+      //Boolean - Whether to show horizontal lines (except X axis)
+      scaleShowHorizontalLines: true,
+      //Boolean - Whether to show vertical lines (except Y axis)
+      scaleShowVerticalLines: true,
+      //Boolean - Whether the line is curved between points
+      bezierCurve: true,
+      //Number - Tension of the bezier curve between points
+      bezierCurveTension: 0.3,
+      //Boolean - Whether to show a dot for each point
+      pointDot: false,
+      //Number - Radius of each point dot in pixels
+      pointDotRadius: 4,
+      //Number - Pixel width of point dot stroke
+      pointDotStrokeWidth: 1,
+      //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+      pointHitDetectionRadius: 20,
+      //Boolean - Whether to show a stroke for datasets
+      datasetStroke: true,
+      //Number - Pixel width of dataset stroke
+      datasetStrokeWidth: 2,
+      //Boolean - Whether to fill the dataset with a color
+      datasetFill: true,
+      //String - A legend template
+      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+      //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+      maintainAspectRatio: true,
+      //Boolean - whether to make the chart responsive to window resizing
+      responsive: true
+    };
+
+    //Create the line chart
+    areaChart.Line(areaChartData, areaChartOptions);
     //-------------
     //- BAR CHART -
     //-------------

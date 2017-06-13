@@ -14,9 +14,9 @@ class IndexController extends Controller
         $worst_interfaces = InterfaceModel::getWorstAvgRequestInterface();
         $overtime_count = InterfaceModel::getOvertimeCount();
         $recent_overtime_count = InterfaceStatisticsModel::getRecentOvertimeCount();
-
         $err_5xx_count = InterfaceStatisticsModel::getRecent5xxCount();
         $err_499_count = InterfaceStatisticsModel::getRecent499Count();
+        $oneweek_overtime = InterfaceStatisticsModel::getOneWeekOvertimeInfo();
 
         $data = [
             'worst_interfaces' => $worst_interfaces,
