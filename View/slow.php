@@ -25,6 +25,23 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
+          <div class="row">
+            <div class="col-sm-1">搜索条件：</div>
+            <div class="col-sm-8">
+              <select>
+                <option value="0">默认显示全部系统</option>
+                <?php foreach($systems as $system_id => $system) { ?>
+                <option value="<?=$system_id?>"><?=$system?></option>
+                <?php } ?>
+              </select>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="number" placeholder="填写平均耗时ms"/>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="submit" value="search"/>
+            </div>
+            
+          </div>
+          <br>
           <table id="example1" class="table table-bordered table-striped">
             <thead>
               <tr>
@@ -33,7 +50,8 @@
                 <th>最短耗时(ms)</th>
                 <th>最长耗时(ms)</th>
                 <th>平均耗时(ms)</th>
-                <th>请求次数</th>
+                <th>总请求次数</th>
+                <th>操作</th>
               </tr>
             </thead>
             <tbody>
@@ -45,21 +63,23 @@
                 <td><?=$interface->max_request_time?></td>
                 <td><?=$interface->avg_request_time?></td>
                 <td><?=$interface->request_count?></td>
+                <td></td>
               </tr>
               <?php } ?>
             </tbody>
           </table>
+          <div class="row">
+            <div class="col-sm-5">
+              <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">共有个慢接口</div>
+            </div>
+            <div class="col-sm-7">
+            </div>
+          </div>
         </div>
         <!-- /.box-body -->
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-5">
-        <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">共有个慢接口</div>
-      </div>
-      <div class="col-sm-7">
-      </div>
-    </div>
+    
   </section>
 </div>
 <!-- /.content-wrapper -->
