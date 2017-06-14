@@ -17,13 +17,16 @@ class IndexController extends Controller
         $err_5xx_count = InterfaceStatisticsModel::getRecent5xxCount();
         $err_499_count = InterfaceStatisticsModel::getRecent499Count();
         $oneweek_overtime = InterfaceStatisticsModel::getOneWeekOvertimeInfo();
+        $oneweek_errorinfo = InterfaceStatisticsModel::getOneWeekErrorInfo();
 
         $data = [
-            'worst_interfaces' => $worst_interfaces,
-            'overtime_count'   => $overtime_count,
+            'worst_interfaces'      => $worst_interfaces,
+            'overtime_count'        => $overtime_count,
             'recent_overtime_count' => $recent_overtime_count,
-            'err_5xx_count'        => $err_5xx_count,
-            'err_499_count'        => $err_499_count,
+            'err_5xx_count'         => $err_5xx_count,
+            'err_499_count'         => $err_499_count,
+            'oneweek_overtime'      => $oneweek_overtime,
+            'oneweek_errorinfo'     => $oneweek_errorinfo,
         ];
         $this->assign('data', $data);
 		$this->display('View/index.php');
