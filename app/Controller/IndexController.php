@@ -7,11 +7,8 @@ use App\Model\SystemModel;
 
 class IndexController extends Controller 
 {
-	public function _initialize(){
-	}
-
-	public function index() {
-        $worst_interfaces = InterfaceModel::getWorstAvgRequestInterface();
+    public function index() 
+    {
         $overtime_count = InterfaceModel::getOvertimeCount();
         $recent_overtime_count = InterfaceStatisticsModel::getRecentOvertimeCount();
         $err_5xx_count = InterfaceStatisticsModel::getRecent5xxCount();
@@ -20,7 +17,6 @@ class IndexController extends Controller
         $oneweek_errorinfo = InterfaceStatisticsModel::getOneWeekErrorInfo();
 
         $data = [
-            'worst_interfaces'      => $worst_interfaces,
             'overtime_count'        => $overtime_count,
             'recent_overtime_count' => $recent_overtime_count,
             'err_5xx_count'         => $err_5xx_count,

@@ -12,7 +12,7 @@
         </a>
       </li>
       <li>
-        <a href="/pages/widgets.html">
+        <a href="/slow">
           <i class="fa fa-th"></i> <span>慢接口排名</span>
         </a>
       </li>

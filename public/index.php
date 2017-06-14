@@ -5,10 +5,8 @@ ini_set('display_errors','On');
 require_once(__DIR__.'/../BladePHP/Blade.php');
 if ( ! defined('isInSite')) die('No Access');
 
-$uri = $_SERVER['REQUEST_URI'];
-$query_str = $_SERVER['QUERY_STRING'];
-$uri = rtrim($uri, '?' . $query_str);
-$uri = trim($uri, '/');
+$uri = isset($_GET['_url']) ? $_GET['_url'] : '';
+$uri = ltrim($uri, '/');
 
 if(empty($uri)) {
     $controller = 'App\\Controller\\IndexController';
