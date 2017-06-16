@@ -16,7 +16,7 @@ class SlowController extends Controller
 
         $interface_model = InterfaceModel::needPage();
         $interfaces = $interface_model::where('avg_request_time', '>=', $min_consume);
-        if(!is_null($system_id)) {
+        if(!empty($system_id)) {
             $interfaces = $interfaces->where('system_id', $system_id);
         }
 
@@ -26,8 +26,10 @@ class SlowController extends Controller
         }
         
         $data = [
-            'interfaces' => $interfaces,
-            'systems'    => $systems,
+            'interfaces'  => $interfaces,
+            'systems'     => $systems,
+            'system_id'   => $system_id,
+            'min_consume' => $min_consume,
         ];
 
         $this->assign('data', $data);

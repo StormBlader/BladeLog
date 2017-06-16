@@ -26,20 +26,23 @@
         <!-- /.box-header -->
         <div class="box-body">
           <div class="row">
-            <div class="col-sm-1">搜索条件：</div>
-            <div class="col-sm-8">
-              <select>
-                <option value="0">默认显示全部系统</option>
-                <?php foreach($systems as $system_id => $system) { ?>
-                <option value="<?=$system_id?>"><?=$system?></option>
-                <?php } ?>
-              </select>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="number" placeholder="填写平均耗时ms"/>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="submit" value="search"/>
-            </div>
-            
+            <form>
+              <div class="col-sm-8">
+                选择系统搜索：
+                <select name="system_id">
+                  <option value="0">选择系统</option>
+                  <?php foreach($data['systems'] as $key_system_id => $system) { ?>
+                  <option  <?php if($key_system_id == $data['system_id']) { ?> selected="selected" <?php } ?> value="<?=$key_system_id?>"><?=$system?></option>
+                  <?php } ?>
+                </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                慢接口标准：
+                <input type="number" name="min_consume" placeholder="慢接口标准" value="<?=$data['min_consume']?>"/>&nbsp;ms
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="search"/>
+              </div>
+
+            </form>
           </div>
           <br>
           <table id="example1" class="table table-bordered table-striped">
