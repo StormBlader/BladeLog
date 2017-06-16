@@ -70,9 +70,10 @@
           </table>
           <div class="row">
             <div class="col-sm-5">
-              <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">共有个慢接口</div>
+              <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">共有<?=$data['interfaces']->total();?>个慢接口</div>
             </div>
             <div class="col-sm-7">
+              <?=$data['interfaces']->render();?>
             </div>
           </div>
         </div>

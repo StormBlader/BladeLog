@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "99b6691cf39e848dec6cb7c8b7cf0144",
+    "content-hash": "77f93464763bffefd01a152a930e010a",
     "packages": [
         {
             "name": "danielstjules/stringy",
@@ -415,6 +415,49 @@
             "description": "The Illuminate Filesystem package.",
             "homepage": "http://laravel.com",
             "time": "2015-05-15T07:22:28+00:00"
+        },
+        {
+            "name": "illuminate/pagination",
+            "version": "v5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/pagination.git",
+                "reference": "5bd8ed0c8d17e18041492ed54f54fa7d92d1ab0c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/illuminate/pagination/5bd8ed0c8d17e18041492ed54f54fa7d92d1ab0c.zip",
+                "reference": "5bd8ed0c8d17e18041492ed54f54fa7d92d1ab0c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.0.*",
+                "illuminate/support": "5.0.*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Pagination\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "description": "The Illuminate Pagination package.",
+            "time": "2015-01-07T20:33:04+00:00"
         },
         {
             "name": "illuminate/support",

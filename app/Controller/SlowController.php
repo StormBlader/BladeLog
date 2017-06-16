@@ -18,7 +18,8 @@ class SlowController extends Controller
         if(!is_null($system_id)) {
             $interfaces = $interfaces->where('system_id', $system_id);
         }
-        $interfaces = $interfaces->orderBy('avg_request_time', 'desc')->take(15)->get();
+
+        $interfaces = $interfaces->orderBy('avg_request_time', 'desc')->paginate(15);
         
         $data = [
             'interfaces' => $interfaces,
