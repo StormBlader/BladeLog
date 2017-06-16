@@ -66,7 +66,7 @@
                 <td><?=$interface->max_request_time?></td>
                 <td><?=$interface->avg_request_time?></td>
                 <td><?=$interface->request_count?></td>
-                <td><a href="">查看</a></td>
+                <td><a href="/consume/detail?interface_id=<?=$interface->id?>">查看</a></td>
               </tr>
               <?php } ?>
             </tbody>
