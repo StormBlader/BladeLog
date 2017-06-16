@@ -2,6 +2,21 @@
 <aside class="main-sidebar">
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
+    <!-- search form -->
+    <form action="/index/search" method="get" class="sidebar-form">
+      <div class="input-group">
+        <input type="hidden" name="search_uri_id" id="search_uri_id" value="0"/>
+        <input type="text" id="search_uri" class="form-control" placeholder="输入接口uri搜索" oninput="searchUri()">
+        
+        <span class="input-group-btn">
+          <button type="submit" id="search-btn" class="btn btn-flat">
+            <i class="fa fa-search"></i>
+          </button>
+        </span>
+      </div>
+      <ul class="on_changes" id="searchList" style="position:relative; list-style:none; background:#FFF; border:1px solid #000; padding:3px; display:none;">
+      </ul>
+    </form>
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
       <li class="header">菜单 </li>
@@ -43,12 +58,43 @@
   <!-- /.sidebar -->
 </aside>
 <script type="text/javascript">
-    $(document).ready(function(){
-        /*导航高亮*/
-        var path = window.location.pathname;
+$(document).ready(function(){
+    /*导航高亮*/
+    var path = window.location.pathname;
 
-        $('ul.treeview-menu>li').find('a[href="'+path+'"]').closest('li').addClass('active');  //二级链接高亮
-        $('ul.treeview-menu>li').find('a[href="'+path+'"]').closest('li.treeview').addClass('active');  //一级栏目[含二级链接]高亮
-        $('.sidebar-menu>li').find('a[href="'+path+'"]').closest('li').addClass('active');  //一级栏目[不含二级链接]高亮
-    });
-  </script>
+    $('ul.treeview-menu>li').find('a[href="'+path+'"]').closest('li').addClass('active');  //二级链接高亮
+    $('ul.treeview-menu>li').find('a[href="'+path+'"]').closest('li.treeview').addClass('active');  //一级栏目[含二级链接]高亮
+    $('.sidebar-menu>li').find('a[href="'+path+'"]').closest('li').addClass('active');  //一级栏目[不含二级链接]高亮
+});
+function searchUri()
+{
+  var uri = $("#search_uri").val();
+  // 删除，保证每次都是最新的数据
+  $("#searchList li").remove();
+  $("#searchList").show();
+
+  $.post(
+    '/index/ajaxsearch',
+    {
+      uri : uri
+    },
+    function(data) {
+      $.each(data, function(idx, item){
+        var li = "<li onclick='getValue(&apos;"
+          +item.id+"&apos;,&apos;"
+          +item.uri+"&apos;)' onmouseover='this.style.backgroundColor=\"#ffff66\";'onmouseout='this.style.backgroundColor=\"#fff\";'>"
+          +item.uri+"</li>";
+        console.log(li);
+        $("#searchList").append(li);
+      });
+    }
+  );
+}
+
+function getValue(id, uri)
+{
+  $("#search_uri").val(uri);
+  $("#search_uri_id").val(id);
+  $("#searchList").hide();
+}
+</script>

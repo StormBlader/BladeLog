@@ -28,4 +28,27 @@ class IndexController extends Controller
 		$this->display('View/index.php');
 	}
 
+    public function search()
+    {
+        $interface_id = $this->getRequest('search_uri_id');
+        $interface = InterfaceModel::find($interface_id);
+        if(is_null($interface)) {
+            echo "no interface";
+            exit;
+        }
+
+        header("location: /consume/detail?interface_id={$interface_id}");
+    }
+
+    public function ajaxsearch()
+    {
+        $uri = $this->getRequest('uri');
+        if(empty($uri)) {
+            return $this->response([]);
+        }
+
+        $interfaces = InterfaceModel::where('uri', 'like', "$uri%")->take(20)->get(['id', 'uri'])->toArray();
+        return $this->response($interfaces);
+    }
+
 }

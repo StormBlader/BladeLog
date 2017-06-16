@@ -69,4 +69,11 @@ Class Controller
 		eval ("\$params = \$_{$_SERVER['REQUEST_METHOD']};");
 		return $params;
 	}
+
+    public function response($data)
+    {
+        header('Content-Type: application/json');
+        print_r(json_encode($data));
+        exit;
+    }
 }
