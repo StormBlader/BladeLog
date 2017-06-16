@@ -26,8 +26,8 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <?php foreach($systems as $system) { ?>
-          <li><a href="#"><i class="fa fa-circle-o"></i><?=$system?></a></li>
+          <?php foreach($systems as $key_system_id => $system) { ?>
+          <li><a href="/consume/getList?system_id=<?=$key_system_id?>"><i class="fa fa-circle-o"></i><?=$system?></a></li>
           <?php } ?>
         </ul>
       </li>
@@ -47,7 +47,6 @@
         /*导航高亮*/
         var path = window.location.pathname;
 
-        console.log(path);
         $('ul.treeview-menu>li').find('a[href="'+path+'"]').closest('li').addClass('active');  //二级链接高亮
         $('ul.treeview-menu>li').find('a[href="'+path+'"]').closest('li.treeview').addClass('active');  //一级栏目[含二级链接]高亮
         $('.sidebar-menu>li').find('a[href="'+path+'"]').closest('li').addClass('active');  //一级栏目[不含二级链接]高亮

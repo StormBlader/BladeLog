@@ -2,15 +2,12 @@
 namespace App\Controller;
 use Lib\Controller;
 use App\Model\InterfaceModel;
-use App\Model\InterfaceStatisticsModel;
 use App\Model\SystemModel;
 
 class SlowController extends Controller 
 {
     public function index() 
     {
-        $systems = SystemModel::getAllSystem();
-
         $system_id = $this->getRequest('system_id');
         $min_consume = $this->getRequest('min_consume', 1000);
 
@@ -27,7 +24,6 @@ class SlowController extends Controller
         
         $data = [
             'interfaces'  => $interfaces,
-            'systems'     => $systems,
             'system_id'   => $system_id,
             'min_consume' => $min_consume,
         ];

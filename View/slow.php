@@ -31,7 +31,7 @@
                 选择系统搜索：
                 <select name="system_id">
                   <option value="0">选择系统</option>
-                  <?php foreach($data['systems'] as $key_system_id => $system) { ?>
+                  <?php foreach($systems as $key_system_id => $system) { ?>
                   <option  <?php if($key_system_id == $data['system_id']) { ?> selected="selected" <?php } ?> value="<?=$key_system_id?>"><?=$system?></option>
                   <?php } ?>
                 </select>
@@ -60,13 +60,13 @@
             <tbody>
               <?php foreach($data['interfaces'] as $interface) { ?>
               <tr>
-                <td><?=$data['systems'][$interface->system_id]?></td>
+                <td><?=$systems[$interface->system_id]?></td>
                 <td><?=$interface->uri?></td>
                 <td><?=$interface->min_request_time?></td>
                 <td><?=$interface->max_request_time?></td>
                 <td><?=$interface->avg_request_time?></td>
                 <td><?=$interface->request_count?></td>
-                <td></td>
+                <td><a href="">查看</a></td>
               </tr>
               <?php } ?>
             </tbody>
@@ -83,7 +83,6 @@
         <!-- /.box-body -->
       </div>
     </div>
-    
   </section>
 </div>
 <!-- /.content-wrapper -->
