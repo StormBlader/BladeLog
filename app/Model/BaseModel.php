@@ -6,6 +6,10 @@ class BaseModel extends Model
 {
     public function __construct()
     {
+    }
+
+    public static function needPage()
+    {
         \Illuminate\Pagination\Paginator::currentPathResolver(function(){
             $uri = isset($_GET['_url']) ? $_GET['_url'] : '';
             $uri = ltrim($uri, '/');
@@ -18,5 +22,8 @@ class BaseModel extends Model
 
             return $page;
         });
+
+        return get_called_class();
     }
+
 }
