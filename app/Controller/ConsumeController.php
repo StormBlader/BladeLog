@@ -4,8 +4,11 @@ use Lib\Controller;
 use App\Model\InterfaceStatisticsModel;
 use App\Model\InterfaceModel;
 
+use Illuminate\Database\Capsule\Manager as DB;
+
 class ConsumeController extends Controller
 {
+
     public function getList()
     {
         $system_id          = $this->getRequest('system_id', 1);
@@ -59,5 +62,42 @@ class ConsumeController extends Controller
 
     public function detail()
     {
+        $interface_id = $this->getRequest('interface_id', 0);
+        $begin_date_search  = $this->getRequest('begin_date_search');
+        $end_date_search    = $this->getRequest('end_date_search');
+
+        $interface = InterfaceModel::findOrFail($interface_id);
+
+        $interface_statistics_model = InterfaceStatisticsModel::needPage();
+        $statistics_list = $interface_statistics_model::where('interface_id', $interface_id)->orderBy('date', 'desc');
+        if(!empty($begin_date_search)) {
+            $statistics_list = $statistics_list->where('date', '>=', $begin_date_search);
+        }
+        if(!empty($end_date_search)) {
+            $statistics_list = $statistics_list->where('date', '<=', $end_date_search);
+        }
+
+        $statistics_list = $statistics_list->paginate(15)->appends(['interface_id' => $interface_id]);
+        if(!empty($begin_date_search)) {
+            $statistics_list->appends(['date' => $begin_date_search]);
+        }
+        if(!empty($end_date_search)) {
+            $statistics_list->appends(['date' => $end_date_search]);
+        }
+
+        $data = [
+            'begin_date_search'       => $begin_date_search,
+            'end_date_search'         => $end_date_search,
+            'statistics_list'         => $statistics_list,
+            'interface'               => $interface,
+            'onemonth_avgtime'        => $interface->getOneMonthInfo('avg_request_time'),
+            'onemonth_requestcount'   => $interface->getOneMonthInfo('request_count'),
+            'onemonth_code_499_count' => $interface->getOneMonthInfo('code_499_count'),
+            'onemonth_code_5xx_count' => $interface->getOneMonthInfo('code_5xx_count'),
+        ];
+
+        $this->assign('data', $data);
+        $this->display('View/consumeDetail.php');
     }
+
 }

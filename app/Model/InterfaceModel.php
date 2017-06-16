@@ -36,4 +36,28 @@ class InterfaceModel extends BaseModel
         return self::where('avg_request_time', '>', '1000')->count();
     }
 
+    public function getOneMonthInfo($info_attr)
+    {
+        $begin_time = date('Y-m-d 00:00:00', strtotime("-1 month"));
+        $end_time = date('Y-m-d 00:00:00');
+
+        $tmp_statictis = InterfaceStatisticsModel::where('date', '>=', $begin_time)->where('date', '<=', $end_time)->where('interface_id', $this->id)->get();
+        $interface_statistics = [];
+        foreach($tmp_statictis as $statictis) {
+            $interface_statistics[$statictis->date] = $statictis[$info_attr];
+        }
+
+        $ret = [];
+        $time_arr = getTimeArr($begin_time, $end_time);
+        foreach($time_arr as $time_item) {
+            if(isset($interface_statistics[$time_item])) {
+                $ret[$time_item] = $interface_statistics[$time_item];
+            }else {
+                $ret[$time_item] = 0;
+            }
+        }
+
+        return $ret;
+    }
+
 }

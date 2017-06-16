@@ -82,3 +82,23 @@ function curlRequest($url, $data='', $method='POST', $cookieFile='', $headers=''
     return $response;
 }
 
+function getTimeArr($begin_time, $end_time)
+{
+    $begin_second = strtotime($begin_time);
+    $end_second = strtotime($end_time);
+    if($begin_second > $end_second) {
+        return [];
+    }
+
+    $diff_days = ($end_second - $begin_second) / 86400;
+
+    $ret = [];
+    for($i = $diff_days; $i > 0; $i--) {
+        $ret[] = date('Y-m-d 00:00:00', strtotime("-$i day"));
+    }
+
+    $ret[] = $end_time;
+
+    return $ret;
+}
+

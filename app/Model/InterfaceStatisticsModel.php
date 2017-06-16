@@ -100,7 +100,7 @@ class InterfaceStatisticsModel extends BaseModel
     public static function getOneWeekErrorInfo()
     {
         $begin_time = date('Y-m-d', strtotime('-7 day'));
-        $now_time = date('Y-m-d');
+        $now_time = date('Y-m-d 00:00:00');
         $arr_time = [];
         for($i = 7; $i > 0; $i --) {
             $arr_time[] = date('Y-m-d 00:00:00', strtotime("-$i day"));
