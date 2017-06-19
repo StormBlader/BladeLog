@@ -6,6 +6,7 @@
 <script src="/static/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- bootstrap datepicker -->
 <script src="/static/plugins/datepicker/bootstrap-datepicker.js"></script>
+
 <?php include ROOT . 'View/widgets/header.php';?>
 <?php include ROOT . 'View/widgets/leftmenu.php';?>
 
@@ -25,7 +26,7 @@
     <div class="row">
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">access_log</h3>
+          
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -33,27 +34,31 @@
               <form>
                 <div class="col-sm-12">
                   选择系统搜索：
-                  <select name="system_id" id="system_id" onchange="selectSystem()">
+                  <select name="system_id" id="system_id" onchange="selectSystem(0)">
                     <option value="0">选择系统</option>
                     <?php foreach($systems as $key_system_id => $system) { ?>
                     <option  <?php if($key_system_id == $data['system_id']) { ?> selected="selected" <?php } ?> value="<?=$key_system_id?>"><?=$system?></option>
                     <?php } ?>
                   </select>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;
                   <span id="interface_select_span" style="display:none">
                     选择接口：
-                    <select name="interface_id" id="interface_select" style="width:150px;">
-                      
-                    </select>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <select name="interface_id" id="interface_select" style="width:150px;"></select>
+                    &nbsp;&nbsp;
                   </span>
                   接口耗时标准：
                   <input type="number" name="min_consume" placeholder="接口耗时标准" value="<?=$data['min_consume']?>"/>&nbsp;ms
-                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;
+                  http code：
+                  <input type="number" name="http_code" placeholder="返回http_code" value="<?=$data['http_code']?>"/>
+                  &nbsp;&nbsp;
                   日志时间：
-                  <input type="text" class="datepicker" name="date" placeholder="开始时间" value="<?=$data['date']?>" />&nbsp;
+                  <input type="text" class="datepicker" name="date" placeholder="开始时间" value="<?=$data['date']?>" />
+                  &nbsp;&nbsp;
+                  <br>
+                  时间段：
+                  <input type="text" name="begin_time" value="<?=$data['begin_time']?>">h - <input type="text" name="end_time" value="<?=$data['end_time']?>">h
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  
                   <input type="submit" value="search"/>
                 </div>
   
@@ -110,14 +115,16 @@
 <?php include ROOT . 'View/widgets/rightside.php';?>
 <?php include ROOT . 'View/widgets/exportjs.php';?>
 <script type="text/javascript">
-selectSystem();
+selectSystem("<?=$data['interface_id']?>");
 //Date picker
 $('.datepicker').datepicker({
   format: 'yyyy-mm-dd',
   autoclose: true
 });
 
-function selectSystem(system_id)
+
+
+function selectSystem(interface_id)
 {
   var system_id = $("#system_id").val();
   var $interface_info = $("#interface_select_span");
@@ -135,7 +142,7 @@ function selectSystem(system_id)
     function(data) {
       $("#interface_select").append('<option value="0">请选择</option>');
       $.each(data, function(idx, item){
-        if(system_id == item.id) {
+        if(interface_id == item.id) {
           var option = '<option value="' + item.id + '" selected="selected"> ' + item.uri +' </option>';
         }else{
           var option = '<option value="' + item.id + '"> ' + item.uri +' </option>';

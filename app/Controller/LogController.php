@@ -10,16 +10,26 @@ class LogController extends Controller
     {
         $yesterday   = date('Y-m-d', strtotime("-1 day"));
         $date        = $this->getRequest('date', $yesterday);
-        $begin_date  = $this->getRequest('begin_date', '');
-        $end_date    = $this->getRequest('end_date', '');
+        $begin_time  = $this->getRequest('begin_time', '');
+        $end_time    = $this->getRequest('end_time', '');
         $min_consume = $this->getRequest('min_consume');
         $page        = $this->getRequest('page', 1);
         $system_id   = $this->getRequest('system_id', 0);
         $interface_id = $this->getRequest('interface_id', 0);
+        $http_code    = $this->getRequest('http_code');
 
         $where = [];
-        !empty($system_id) && $where['system_id'] = $system_id;
+        $begin_date = '';
+        $end_date = '';
+        !empty($system_id)    && $where['system_id'] = $system_id;
         !empty($interface_id) && $where['interface_id'] = $interface_id;
+        !empty($http_code)    && $where['http_code'] = $http_code;
+        if(!empty($begin_time)) {
+            $begin_date = date('Y-m-d H:i:s', strtotime($date . " $begin_time:00:00"));
+        }
+        if(!empty($end_time)) {
+            $end_date = date('Y-m-d H:i:s', strtotime($date . "$end_time:00:00"));
+        }
 
         $request_log = new RequestLogModel();
         $logs = $request_log->findByPage($date, $begin_date, $end_date, $min_consume, $where, $page);
@@ -38,11 +48,13 @@ class LogController extends Controller
             'logs'        => $logs,
             'interfaces'  => $interfaces,
             'date'        => $date,
-            'begin_date'  => $begin_date,
-            'end_date'    => $end_date,
+            'begin_time'  => $begin_time,
+            'end_time'    => $end_time,
             'min_consume' => $min_consume,
             'page'        => $page,
             'system_id'   => $system_id,
+            'interface_id' => $interface_id,
+            'http_code'    => $http_code,
         ];
 
         $this->assign('data', $data);
