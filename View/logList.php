@@ -33,13 +33,20 @@
               <form>
                 <div class="col-sm-12">
                   选择系统搜索：
-                  <select name="system_id">
+                  <select name="system_id" id="system_id" onchange="selectSystem()">
                     <option value="0">选择系统</option>
                     <?php foreach($systems as $key_system_id => $system) { ?>
                     <option  <?php if($key_system_id == $data['system_id']) { ?> selected="selected" <?php } ?> value="<?=$key_system_id?>"><?=$system?></option>
                     <?php } ?>
                   </select>
                   &nbsp;&nbsp;&nbsp;&nbsp;
+                  <span id="interface_select_span" style="display:none">
+                    选择接口：
+                    <select name="interface_id" id="interface_select" style="width:150px;">
+                      
+                    </select>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                  </span>
                   接口耗时标准：
                   <input type="number" name="min_consume" placeholder="接口耗时标准" value="<?=$data['min_consume']?>"/>&nbsp;ms
                   &nbsp;&nbsp;&nbsp;&nbsp;
@@ -103,11 +110,44 @@
 <?php include ROOT . 'View/widgets/rightside.php';?>
 <?php include ROOT . 'View/widgets/exportjs.php';?>
 <script type="text/javascript">
+selectSystem();
 //Date picker
 $('.datepicker').datepicker({
   format: 'yyyy-mm-dd',
   autoclose: true
 });
+
+function selectSystem(system_id)
+{
+  var system_id = $("#system_id").val();
+  var $interface_info = $("#interface_select_span");
+  if(system_id == 0) {
+    $("#interface_select").empty();
+    $interface_info.hide();
+    return false;
+  }
+
+  $.post(
+    '/index/ajaxSearchInterface',
+    {
+      system_id : system_id
+    },
+    function(data) {
+      $("#interface_select").append('<option value="0">请选择</option>');
+      $.each(data, function(idx, item){
+        if(system_id == item.id) {
+          var option = '<option value="' + item.id + '" selected="selected"> ' + item.uri +' </option>';
+        }else{
+          var option = '<option value="' + item.id + '"> ' + item.uri +' </option>';
+        }
+        
+        $("#interface_select").append(option);
+      });
+      $interface_info.show();
+    });
+}
+
+
 </script>
 </html>
 

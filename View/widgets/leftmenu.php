@@ -82,7 +82,7 @@ function searchUri()
           +item.id+"&apos;,&apos;"
           +item.uri+"&apos;)' onmouseover='this.style.backgroundColor=\"#ffff66\";'onmouseout='this.style.backgroundColor=\"#fff\";'>"
           +item.uri+"</li>";
-        console.log(li);
+        
         $("#searchList").append(li);
       });
     }

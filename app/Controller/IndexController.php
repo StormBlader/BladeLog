@@ -51,4 +51,12 @@ class IndexController extends Controller
         return $this->response($interfaces);
     }
 
+    public function ajaxSearchInterface()
+    {
+        $system_id = $this->getRequest('system_id', 0);
+        $interfaces = InterfaceModel::where('system_id', $system_id)->select(['id', 'uri'])->get()->toArray();
+
+        return $this->response($interfaces);
+    }
+
 }

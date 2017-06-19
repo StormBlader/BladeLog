@@ -15,11 +15,12 @@ class LogController extends Controller
         $min_consume = $this->getRequest('min_consume');
         $page        = $this->getRequest('page', 1);
         $system_id   = $this->getRequest('system_id', 0);
+        $interface_id = $this->getRequest('interface_id', 0);
 
         $where = [];
-        if(!empty($system_id)) {
-            $where['system_id'] = $system_id;
-        }
+        !empty($system_id) && $where['system_id'] = $system_id;
+        !empty($interface_id) && $where['interface_id'] = $interface_id;
+
         $request_log = new RequestLogModel();
         $logs = $request_log->findByPage($date, $begin_date, $end_date, $min_consume, $where, $page);
         $interface_ids = [];
