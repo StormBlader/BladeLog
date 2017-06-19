@@ -4,6 +4,24 @@ use Lib\Db as LibDB;
 
 class RequestLogModel
 {
+    public static function isLogExists($date, $file_name, $line, $client_ip)
+    {
+        if(self::isTableExists($date) == false) {
+            return false;
+        }
+
+        $sql = "select id from " . self::getTable($date, false) . " where accesslog_file = :accesslog_file and accesslog_offset = :accesslog_offset and client_ip = :client_ip limit 1";
+        $pdo = getInstance('Lib\Db')->getConnect();
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':accesslog_file'   => $file_name,
+            ':accesslog_offset' => $line,
+            ':client_ip'        => $client_ip,
+        ]);
+
+        return $stmt->fetchAll() ? true : false;
+    }
+
     public static function createLog($data)
     {
         if(empty($data)) {
@@ -33,7 +51,7 @@ class RequestLogModel
         return $pdo->lastInsertId();
     }
 
-    public static function getTable($date)
+    public static function getTable($date, $new_flag = true)
     {
         $db = getInstance('Lib\Db');
         $format_date = date('Ymd', strtotime($date));
@@ -42,6 +60,9 @@ class RequestLogModel
         $ret = self::isTableExists($date);
         if($ret) {
             return $table;
+        }
+        if($new_flag == false) {
+            return false;
         }
 
         //没有则新建
@@ -79,6 +100,7 @@ class RequestLogModel
         
         return $ret ? true : false;
     }
+
 
     public static function findByPage($date, $begin_date, $end_date, $min_consume, $other_where = null, $page = 1, $page_size = 15)
     {

@@ -9,6 +9,7 @@ use App\Model\RequestLogModel;
 class importData extends BaseConsole
 {
     private $file;
+    private $_file_name;
     public static $static_extension = [
         'css', 'js', 'jpeg', 'jpg', 'png', 'html', 'htm', 'swf', 'ttf', 'gif', 'ico', 'txt'
     ];
@@ -27,6 +28,8 @@ class importData extends BaseConsole
             echo "error file\n";
             exit;
         }
+
+        $this->_file_name = pathinfo($this->file, PATHINFO_BASENAME);
     }
 
     public function execute()
@@ -35,18 +38,29 @@ class importData extends BaseConsole
         if($fp === false) {
             return false;
         }
+        $i = 1;
         while(!feof($fp)) {
             $line = fgets($fp);
-            $ret = $this->_handleLog($line);
-            if($ret !== false) {
+            $ret = $this->_handleLog($line, $i);
+            if($ret === true) {
+                echo $this->_file_name . " \t {$i} line has existed\n";
+            }elseif($ret !== false) {
                 echo "$ret \t success \n";
             }
+            $i ++;
         }
         fclose($fp);
     }
 
-    private function _handleLog($line)
+    private function _handleLog($line, $offset)
     {
+        $client_ip = $this->_getRequestIp($line, 'client_ip');
+        $request_time = $this->_getRequestTime($line);
+        $log_flag = RequestLogModel::isLogExists($request_time, $this->_file_name, $offset, $client_ip);
+        if($log_flag) {
+            return true;
+        }
+
         $system_name = $this->_getSystemByLine($line);
         if(empty($system_name)) {
             return false;
@@ -68,10 +82,12 @@ class importData extends BaseConsole
         $request_log = [
             'system_id'        => $system_id,
             'interface_id'     => $interface->id,
+            'accesslog_file'   => $this->_file_name,
+            'accesslog_offset' => $offset,
             'server_ip'        => $this->_getRequestIp($line, 'server_ip'),
-            'client_ip'        => $this->_getRequestIp($line, 'client_ip'),
+            'client_ip'        => $client_ip,
             'request_header'   => $this->_getRequestHeader($line),
-            'request_time'     => $this->_getRequestTime($line),
+            'request_time'     => $request_time,
             'request_querystr' => json_encode($this->_getQueryStr($line), JSON_UNESCAPED_UNICODE),
             'http_code'        => $this->_getHttpCode($line),
             'country'          => $this->_getCountry($line),
