@@ -96,11 +96,13 @@
               </tbody>
             </table>
             <div class="row">
-              <div class="col-sm-5">
-                <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">共有0个</div>
-              </div>
+              <div class="col-sm-5"></div>
               <div class="col-sm-7">
-               
+                <ul class="pagination">
+                  <li><a href="<?=$data['previous_page']?>">«</a></li>
+                  <li class="active"><span><?=$data['page']?></span></li>
+                  <li><a href="<?=$data['next_page']?>">»</a></li>
+                </ul>
               </div>
             </div>
           

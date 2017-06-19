@@ -44,17 +44,33 @@ class LogController extends Controller
             $interfaces[$interface->id] = $interface;
         }
 
+        $current_uri = $_SERVER['REQUEST_URI'];
+        if(strpos($current_uri, '?') !== false) {
+            if(strpos($current_uri, 'page') !== false) {
+                $previous_page = preg_replace('/page=\d*/', 'page=' .  (($page <= 1) ? 1 : $page - 1) , $current_uri);
+                $next_page     = preg_replace('/page=\d*/', 'page=' . ($page + 1), $current_uri);
+            }else {
+                $previous_page = $current_uri . "&page =" . (($page <= 1) ? 1 : $page - 1);
+                $next_page = $current_uri . "&page=" . ($page + 1);
+            }
+        }else {
+            $previous_page = $current_uri . "?page =" . (($page <= 1) ? 1 : $page - 1) ;
+            $next_page = $current_uri . "?page=" . ($page + 1);
+        }
+
         $data = [
-            'logs'        => $logs,
-            'interfaces'  => $interfaces,
-            'date'        => $date,
-            'begin_time'  => $begin_time,
-            'end_time'    => $end_time,
-            'min_consume' => $min_consume,
-            'page'        => $page,
-            'system_id'   => $system_id,
-            'interface_id' => $interface_id,
-            'http_code'    => $http_code,
+            'logs'          => $logs,
+            'interfaces'    => $interfaces,
+            'date'          => $date,
+            'begin_time'    => $begin_time,
+            'end_time'      => $end_time,
+            'min_consume'   => $min_consume,
+            'page'          => $page,
+            'system_id'     => $system_id,
+            'interface_id'  => $interface_id,
+            'http_code'     => $http_code,
+            'previous_page' => $previous_page,
+            'next_page'     => $next_page,
         ];
 
         $this->assign('data', $data);
