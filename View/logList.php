@@ -69,6 +69,7 @@
               </thead>
               <tbody>
                  <?php foreach($data['logs'] as $log) { ?>
+              <tr>
                  <td><?=$systems[$log['system_id']]?></td>
                  <td><?=$data['interfaces'][$log['interface_id']]['uri']?></td>
                  <td><?=$log['request_time']?></td>
@@ -78,6 +79,7 @@
                  <td><?=$log['http_code']?></td>
                  <td><?=$log['request_consume']?></td>
                  <td><?=$log['upstream_consume']?></td>
+               </tr>
                  <?php } ?>
               </tbody>
             </table>
