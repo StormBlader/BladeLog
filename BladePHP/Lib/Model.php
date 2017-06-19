@@ -13,7 +13,8 @@ Class Model {
     /**
      * 构造函数 连接数据库即实例化DB类
      */
-	function __construct() {
+    function __construct() 
+    {
 		if(method_exists($this,'_initialize'))
             $this->_initialize();		
 		$this->db = getInstance('Lib\Db');
@@ -27,9 +28,9 @@ Class Model {
      * @param string $method 方法名称
      * @param array $args 调用参数
      * @return mixed
-	 * @update 2015-02-02
      */
-    public function __call($method,$args) {
+    public function __call($method,$args) 
+    {
 		$method = strtolower($method);
 		$arg = isset($args[0]) ? $args[0] : '';
 		if(in_array($method,$this->methods,true)) {
@@ -53,7 +54,8 @@ Class Model {
      * 获得一个表的列名
      * @return array $columns
      */
-	public function getFields() {
+    public function getFields() 
+    {
 		$sql = 'SHOW COLUMNS FROM '.$this->table;
 		$columns = $this->db->getFields($sql);	
 		return $columns;
@@ -64,7 +66,8 @@ Class Model {
 	 * @return string
 	 * 2015-02-01
 	 */
-	function getWhereSql() {
+    function getWhereSql() 
+    {
 		$data = array_filter(getFormParams(), 'arrayFilterVal');
 		$fields = $this->getFields();
 		$where = '';
@@ -85,7 +88,8 @@ Class Model {
 	 * 查询数据集
 	 * @return array result
 	 */
-	public function select() {
+    public function select() 
+    {
 		$sql = 'SELECT '.(isset($this->options['field'])?$this->options['field']:'*').' FROM '.$this->table;
 		$sql .= !empty($this->options['where'])?' WHERE ' . $this->options['where']:'';
 		$sql .= isset($this->options['order'])?' ORDER BY ' . $this->options['order']:'';
@@ -99,7 +103,8 @@ Class Model {
 	 * 查询一条数据
 	 * @return array result
 	 */
-	public function find() {
+    public function find() 
+    {
 		$sql = 'SELECT '.(isset($this->options['field'])?$this->options['field']:'*').' FROM '.$this->table;
 		$sql .= isset($this->options['where'])?' WHERE ' . $this->options['where']:'';
 		//$sql .= isset($this->options['order'])?' ORDER BY ' . $this->options['order']:'';
@@ -114,7 +119,8 @@ Class Model {
      * @param $datas
      * @return bool
      */
-	public function add($datas) {
+    public function add($datas) 
+    {
 		$sql = 'INSERT INTO '.$this->table;
 		$columns = $this->getFields();
 		$fields = '';
@@ -144,11 +150,8 @@ Class Model {
      * @param $obj Bean对象
      * @return bool
      */
-	/**
-	 * 删除
-	 * 需要带条件
-	 */
-	public function delete() {
+    public function delete() 
+    {
 		$sql = 'DELETE FROM ' . $this->table;
 		$sql .= isset($this->options['where'])?' WHERE ' . $this->options['where']:'';
 		if($this->db->execute($sql))
@@ -162,7 +165,8 @@ Class Model {
 	 * param string $data
      * @return bool
      */
-	public function update($datas) {
+    public function update($datas) 
+    {
 		$sql = 'UPDATE '.$this->table.' SET ';
 		$columns = $this->getFields();
 		$values = '';

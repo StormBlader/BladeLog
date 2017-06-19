@@ -83,7 +83,7 @@ class importData extends BaseConsole
         $ret = RequestLogModel::createLog($request_log);
         $interface->updateRequestInfo($request_log['request_consume']);
 
-        $statistics = $this->_getInterfaceStatistics($system_id, $interface->id, $request_log['request_time']);
+        $statistics = $this->_getInterfaceStatistics($system_id, $interface->id, $request_log['request_time'], $request_log['http_code']);
         $statistics->updateRequestInfo($request_log['request_consume'], $request_log['http_code']);
 
         return $ret;
