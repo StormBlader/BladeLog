@@ -46,13 +46,13 @@
           <?php } ?>
         </ul>
       </li>
-
+      <!--
       <li>
-        <a href="#">
-          <i class="fa fa-th"></i> <span>请求log查看</span>
+        <a href="/log/getList">
+          <i class="fa fa-th"></i> <span>access_log查看</span>
         </a>
       </li>
-
+      -->
     </ul>
   </section>
   <!-- /.sidebar -->

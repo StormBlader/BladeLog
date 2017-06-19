@@ -5,6 +5,11 @@ class RequestLogModel extends BaseModel
 {
     protected $table = 'request_log';
 
+    public function getTable()
+    {
+        return parent::getTable();
+    }
+
     public static function createLog($data)
     {
         $log                   = new self();
@@ -27,5 +32,10 @@ class RequestLogModel extends BaseModel
         }
 
         return false;
+    }
+
+    public static function judgeOrCreateTable()
+    {
+
     }
 }
