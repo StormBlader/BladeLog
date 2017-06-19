@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.23)
 # Database: blade_log
-# Generation Time: 2017-06-09 08:28:49 +0000
+# Generation Time: 2017-06-19 08:37:16 +0000
 # ************************************************************
 
 
@@ -29,7 +29,7 @@ CREATE TABLE `interface_info` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `system_id` int(11) unsigned NOT NULL,
   `method` varchar(128) NOT NULL,
-  `uri` varchar(512) NOT NULL DEFAULT '',
+  `uri` text NOT NULL,
   `avg_request_time` int(7) NOT NULL DEFAULT '0',
   `max_request_time` int(7) NOT NULL DEFAULT '0',
   `min_request_time` int(7) NOT NULL DEFAULT '0',
@@ -37,7 +37,8 @@ CREATE TABLE `interface_info` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `idx_system_id` (`system_id`)
+  KEY `idx_system_id` (`system_id`),
+  KEY `idx_uri` (`uri`(200))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -49,16 +50,24 @@ DROP TABLE IF EXISTS `interface_statistics`;
 
 CREATE TABLE `interface_statistics` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `system_id` int(11) unsigned NOT NULL,
   `interface_id` int(11) unsigned NOT NULL DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `max_request_time` int(7) unsigned NOT NULL DEFAULT '0',
   `min_request_time` int(7) unsigned NOT NULL DEFAULT '0',
   `avg_request_time` int(7) unsigned NOT NULL DEFAULT '0',
   `request_count` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `code_200_count` int(11) NOT NULL DEFAULT '0',
+  `code_4xx_count` int(10) unsigned NOT NULL DEFAULT '0',
+  `code_499_count` int(10) unsigned NOT NULL DEFAULT '0',
+  `code_5xx_count` int(1) unsigned NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uni_interface_data` (`interface_id`,`date`)
+  UNIQUE KEY `uni_date_system_interface` (`date`,`system_id`,`interface_id`),
+  KEY `idx_avgrequest` (`avg_request_time`),
+  KEY `idx_systemid` (`system_id`),
+  KEY `idx_interface_id` (`interface_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -70,13 +79,15 @@ DROP TABLE IF EXISTS `request_log`;
 
 CREATE TABLE `request_log` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `accesslog_file` varchar(128) NOT NULL,
+  `accesslog_offset` int(11) NOT NULL,
   `system_id` int(11) unsigned NOT NULL DEFAULT '0',
   `interface_id` int(11) unsigned NOT NULL DEFAULT '0',
   `server_ip` varchar(128) NOT NULL,
   `client_ip` varchar(128) NOT NULL DEFAULT '',
   `request_header` varchar(512) NOT NULL,
   `request_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `request_querystr` varchar(1024) NOT NULL DEFAULT '',
+  `request_querystr` text NOT NULL,
   `http_code` int(4) unsigned NOT NULL,
   `country` varchar(128) NOT NULL DEFAULT '',
   `region` varchar(128) NOT NULL DEFAULT '',
@@ -85,7 +96,12 @@ CREATE TABLE `request_log` (
   `upstream_consume` int(7) NOT NULL COMMENT 'nginx到fpm的耗时，毫秒',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uni_accesslog_clientIp` (`accesslog_file`,`accesslog_offset`,`client_ip`),
+  KEY `idx_systemid` (`system_id`),
+  KEY `idx_interfaceid` (`interface_id`),
+  KEY `idx_request_time` (`request_time`),
+  KEY `idx_request_consume` (`request_consume`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
