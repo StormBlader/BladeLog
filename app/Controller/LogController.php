@@ -76,4 +76,5 @@ class LogController extends Controller
         $this->assign('data', $data);
         $this->display('View/logList.php');
     }
+
 }
