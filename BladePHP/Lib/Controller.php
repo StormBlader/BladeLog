@@ -1,6 +1,5 @@
 <?php
 namespace Lib;
-use App\Model\SystemModel;
 
 Class Controller 
 {
@@ -55,8 +54,6 @@ Class Controller
      */
     public function display($name = null) 
     {
-        $systems = SystemModel::getAllSystem();
-        $this->assign('systems', $systems);
         echo $this->view->render($name);
     }
 
