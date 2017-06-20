@@ -6,7 +6,7 @@
     <form action="/index/search" method="get" class="sidebar-form">
       <div class="input-group">
         <input type="hidden" name="search_uri_id" id="search_uri_id" value="0"/>
-        <input type="text" id="search_uri" class="form-control" placeholder="输入接口uri搜索" oninput="searchUri()">
+        <input type="text" id="search_uri" class="form-control" placeholder="输入接口uri搜索" oninput="searchUri()"  AUTOCOMPLETE="off">
         
         <span class="input-group-btn">
           <button type="submit" id="search-btn" class="btn btn-flat">
@@ -71,22 +71,27 @@ function searchUri()
   $("#searchList li").remove();
   $("#searchList").show();
 
-  $.post(
-    '/index/ajaxsearch',
-    {
-      uri : uri
-    },
-    function(data) {
-      $.each(data, function(idx, item){
-        var li = "<li onclick='getValue(&apos;"
-          +item.id+"&apos;,&apos;"
-          +item.uri+"&apos;)' onmouseover='this.style.backgroundColor=\"#ffff66\";'onmouseout='this.style.backgroundColor=\"#fff\";'>"
-          +item.uri+"</li>";
-        
-        $("#searchList").append(li);
-      });
-    }
-  );
+  if(uri == '') {
+    $("#searchList li").remove();
+    $("#searchList").hide();
+  }else {
+    $.post(
+      '/index/ajaxsearch',
+      {
+        uri : uri
+      },
+      function(data) {
+        $.each(data, function(idx, item){
+          var li = "<li onclick='getValue(&apos;"
+            +item.id+"&apos;,&apos;"
+            +item.uri+"&apos;)' onmouseover='this.style.backgroundColor=\"#ffff66\";'onmouseout='this.style.backgroundColor=\"#fff\";'>"
+            +item.uri+"</li>";
+          
+          $("#searchList").append(li);
+        });
+      }
+    );
+  }
 }
 
 function getValue(id, uri)
