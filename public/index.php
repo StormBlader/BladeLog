@@ -21,6 +21,9 @@ if(empty($uri)) {
 
 if(class_exists($controller)) {
     $controller_obj = getInstance($controller);
+    if(method_exists($controller_obj, 'init')) {
+        $controller_obj->init();
+    }
     $controller_obj->$action();
 }
 

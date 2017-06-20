@@ -1,10 +1,9 @@
 <?php
 namespace App\Controller;
-use Lib\Controller;
 use App\Model\RequestLogModel;
 use App\Model\InterfaceModel;
 
-class LogController extends Controller 
+class LogController extends BaseController 
 {
     public function getList()
     {

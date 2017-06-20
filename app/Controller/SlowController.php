@@ -1,10 +1,9 @@
 <?php
 namespace App\Controller;
-use Lib\Controller;
 use App\Model\InterfaceModel;
 use App\Model\SystemModel;
 
-class SlowController extends Controller 
+class SlowController extends BaseController 
 {
     public function index() 
     {

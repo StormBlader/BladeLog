@@ -1,12 +1,11 @@
 <?php
 namespace App\Controller;
-use Lib\Controller;
 use App\Model\InterfaceStatisticsModel;
 use App\Model\InterfaceModel;
 
 use Illuminate\Database\Capsule\Manager as DB;
 
-class ConsumeController extends Controller
+class ConsumeController extends BaseController
 {
 
     public function getList()

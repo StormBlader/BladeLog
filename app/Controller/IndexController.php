@@ -1,11 +1,10 @@
 <?php
 namespace App\Controller;
-use Lib\Controller;
 use App\Model\InterfaceModel;
 use App\Model\InterfaceStatisticsModel;
 use App\Model\SystemModel;
 
-class IndexController extends Controller 
+class IndexController extends BaseController 
 {
     public function index() 
     {
